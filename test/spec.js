@@ -18,7 +18,7 @@ describe('middleware', () => {
     middleware = fallback(...args)
   })
   it('accepts HTML requests', () => {
-    const req = { accepts: sinon.stub().returns('html') }
+    const req = { method: 'GET', accepts: sinon.stub().returns('html') }
     const res = { sendFile: sinon.stub() }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).always.have.been.calledWithMatch('html')
@@ -26,15 +26,23 @@ describe('middleware', () => {
     expect(next).not.to.have.been.called
   })
   it('ignores non-HTML requests', () => {
-    const req = { accepts: sinon.stub().returns('') }
+    const req = { method: 'GET', accepts: sinon.stub().returns('') }
     const res = { sendFile: sinon.stub() }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).always.have.been.calledWithMatch('html')
     expect(res.sendFile).not.to.have.been.called
     expect(next).to.have.been.called
   })
+  it('ignores non-GET requests', () => {
+    const req = { method: 'POST', accepts: sinon.stub() }
+    const res = { sendFile: sinon.stub() }
+    expect(middleware(req, res, next)).to.be.undefined
+    expect(req.accepts).not.to.have.been.called
+    expect(res.sendFile).not.to.have.been.called
+    expect(next).to.have.been.called
+  })
   it('passes on errors if the default file can not be served', () => {
-    const req = { accepts: sinon.stub().returns('html') }
+    const req = { method: 'GET', accepts: sinon.stub().returns('html') }
     const res = { sendFile: sinon.spy((path, options, callback) => callback(Error)) }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).always.have.been.calledWithMatch('html')
