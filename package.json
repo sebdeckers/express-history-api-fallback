@@ -1,5 +1,5 @@
 {
-  "name": "express-history-api-fallback",
+  "name": "@stipsan/express-history-api-fallback",
   "version": "2.1.0",
   "description": "Simple fallback for Express-served single page apps that use the HTML5 History API for client side routing.",
   "main": "./dist",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cbas/express-history-api-fallback.git"
+    "url": "git+https://github.com/stipsan/express-history-api-fallback.git"
   },
   "keywords": [
     "express",

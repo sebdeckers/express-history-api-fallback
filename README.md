@@ -1,3 +1,8 @@
+# ATTENTION, THIS IS JUST A TEMPORARY FORK
+
+I just needed to use callbacks instead of being limited to res.sendFile as I 
+use React server side rendering instead of a static index.html file.
+
 # express-history-api-fallback
 A tiny, accurate, fast Express middleware for single page apps with client side routing.
 
