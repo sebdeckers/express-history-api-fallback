@@ -12,7 +12,7 @@ describe('constructor', () => {
   })
 })
 
-describe('middleware', () => {
+describe('middleware with sendFile', () => {
   const next = sinon.stub()
   let middleware
   beforeEach(() => {
@@ -51,42 +51,35 @@ describe('middleware', () => {
     expect(next).to.have.been.called
   })
 })
-describe('middleware with function callback', () => {
+describe('middleware with callback', () => {
   const next = sinon.stub()
+  const args = [(req, res, next) => res.send()]
   let middleware
   beforeEach(() => {
     middleware = fallback(...args)
   })
   it('accepts HTML requests', () => {
     const req = { method: 'GET', accepts: sinon.stub().returns('html') }
-    const res = { sendFile: sinon.stub() }
+    const res = { send: sinon.stub() }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).always.have.been.calledWithMatch('html')
-    expect(res.sendFile).always.have.been.calledWithMatch(...args)
+    expect(res.send).always.have.been.called
     expect(next).not.to.have.been.called
   })
   it('ignores non-HTML requests', () => {
     const req = { method: 'GET', accepts: sinon.stub().returns('') }
-    const res = { sendFile: sinon.stub() }
+    const res = { send: sinon.stub() }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).always.have.been.calledWithMatch('html')
-    expect(res.sendFile).not.to.have.been.called
+    expect(res.send).not.to.have.been.called
     expect(next).to.have.been.called
   })
   it('ignores non-GET requests', () => {
     const req = { method: 'POST', accepts: sinon.stub() }
-    const res = { sendFile: sinon.stub() }
+    const res = { send: sinon.stub() }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).not.to.have.been.called
-    expect(res.sendFile).not.to.have.been.called
-    expect(next).to.have.been.called
-  })
-  it('passes on errors if the default file can not be served', () => {
-    const req = { method: 'GET', accepts: sinon.stub().returns('html') }
-    const res = { sendFile: sinon.spy((path, options, callback) => callback(Error)) }
-    expect(middleware(req, res, next)).to.be.undefined
-    expect(req.accepts).always.have.been.calledWithMatch('html')
-    expect(res.sendFile).to.have.been.called
+    expect(res.send).not.to.have.been.called
     expect(next).to.have.been.called
   })
 })
