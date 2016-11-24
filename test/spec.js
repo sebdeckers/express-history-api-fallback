@@ -19,33 +19,37 @@ describe('middleware', () => {
   })
   it('accepts HTML requests', () => {
     const req = { method: 'GET', accepts: sinon.stub().returns('html') }
-    const res = { sendFile: sinon.stub() }
+    const res = { sendFile: sinon.stub(), setHeader: sinon.stub() }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).always.have.been.calledWithMatch('html')
+    expect(res.setHeader).always.have.been.calledWithMatch('Content-Type', 'text/html; charset=utf-8')
     expect(res.sendFile).always.have.been.calledWithMatch(...args)
     expect(next).not.to.have.been.called
   })
   it('ignores non-HTML requests', () => {
     const req = { method: 'GET', accepts: sinon.stub().returns('') }
-    const res = { sendFile: sinon.stub() }
+    const res = { sendFile: sinon.stub(), setHeader: sinon.stub() }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).always.have.been.calledWithMatch('html')
+    expect(res.setHeader).not.to.have.been.called
     expect(res.sendFile).not.to.have.been.called
     expect(next).to.have.been.called
   })
   it('ignores non-GET requests', () => {
     const req = { method: 'POST', accepts: sinon.stub() }
-    const res = { sendFile: sinon.stub() }
+    const res = { sendFile: sinon.stub(), setHeader: sinon.stub() }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).not.to.have.been.called
+    expect(res.setHeader).not.to.have.been.called
     expect(res.sendFile).not.to.have.been.called
     expect(next).to.have.been.called
   })
   it('passes on errors if the default file can not be served', () => {
     const req = { method: 'GET', accepts: sinon.stub().returns('html') }
-    const res = { sendFile: sinon.spy((path, options, callback) => callback(Error)) }
+    const res = { sendFile: sinon.spy((path, options, callback) => callback(Error)), setHeader: sinon.stub() }
     expect(middleware(req, res, next)).to.be.undefined
     expect(req.accepts).always.have.been.calledWithMatch('html')
+    expect(res.setHeader).to.have.been.called
     expect(res.sendFile).to.have.been.called
     expect(next).to.have.been.called
   })
