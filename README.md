@@ -51,7 +51,7 @@ Valid options are `maxAge`, `root`, `lastModified`, `headers`, and `dotfiles`. S
 ## But doesn't this already exist?
 Yes, but this implementation is much better.
 
-- **Only for GET requests**: The fallback should not serve your `index.html` for `POST` or other requests.
+- **Only for GET (and HEAD) requests**: The fallback should not serve your `index.html` for `POST` or other requests.
 - **Only for HTML requests**: Never serve mistakenly for JS or CSS or image or other static file requests. Less debugging headaches.
 - **Only when needed**: Serve the fallback only when the file is missing.
 - **High performance**: Let `res.sendFile()` in Express `>=4.8.0` do the heavy lifting of serving the file.
