@@ -26,7 +26,7 @@ describe('middleware', () => {
       expect(req.accepts).always.have.been.calledWithMatch('html')
       expect(res.sendFile).always.have.been.calledWithMatch(...args)
       expect(next).not.to.have.been.called
-    })  
+    })
   })
   methods.forEach(method => {
     it(`ignores ${method} non-HTML requests`, () => {
