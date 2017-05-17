@@ -1,6 +1,6 @@
 {
   "name": "express-history-api-fallback",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Simple fallback for Express-served single page apps that use the HTML5 History API for client side routing.",
   "main": "./dist",
   "scripts": {
