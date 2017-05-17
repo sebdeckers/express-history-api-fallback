@@ -6,7 +6,7 @@ A tiny, accurate, fast Express middleware for single page apps with client side 
 
 [![NPM](https://nodei.co/npm/express-history-api-fallback.png)](https://www.npmjs.com/package/express-history-api-fallback)
 
-Works as a middleware for Express v4.8.0 or later. Can be used as either an application middleware or a router middleware.
+Works as a middleware for Express. Can be used as either an application middleware or a router middleware.
 
 ```js
 import fallback from 'express-history-api-fallback'
@@ -29,7 +29,7 @@ app.use(fallback('index.html', { root: root }))
 ## fallback(path[, options])
 Returns a middleware for use by Express applications and routers.
 
-Arguments are passed to [Response.sendFile()](http://expressjs.com/api.html#res.sendFile) in Express v4.8.0 or later.
+Arguments are passed to [res.sendFile()](http://expressjs.com/api.html#res.sendFile) in `express@>=v4.8.0`, or [res.sendfile()](http://expressjs.com/en/3x/api.html#res.sendfile) otherwise.
 
 Absolute path:
 ```js
@@ -46,7 +46,7 @@ Location of the HTML file containing single page app entry point.
 Unless the `root` option is set in the `options` object, `path` must be an absolute path of the file.
 
 ### options
-Valid options are `maxAge`, `root`, `lastModified`, `headers`, and `dotfiles`. See [Response.sendFile()](http://expressjs.com/api.html#res.sendFile) for details.
+Valid options are `maxAge`, `root`, `lastModified`, `headers`, and `dotfiles`. See [Response.sendFile()](http://expressjs.com/api.html#res.sendFile) for details. Note that only `maxAge` and `root` are supported with `express@<4.8`.
 
 ## But doesn't this already exist?
 Yes, but this implementation is much better.

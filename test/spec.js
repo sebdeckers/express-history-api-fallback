@@ -13,9 +13,10 @@ describe('constructor', () => {
 
 describe('middleware', () => {
   const methods = ['GET', 'HEAD']
-  const next = sinon.stub()
+  let next
   let middleware
   beforeEach(() => {
+    next = sinon.stub()
     middleware = fallback(...args)
   })
   methods.forEach(method => {
@@ -46,6 +47,16 @@ describe('middleware', () => {
       expect(req.accepts).always.have.been.calledWithMatch('html')
       expect(res.sendFile).to.have.been.called
       expect(next).to.have.been.called
+    })
+  })
+  methods.forEach(method => {
+    it(`supports legacy Express res.sendfile API for ${method} requests`, () => {
+      const req = { method, accepts: sinon.stub().returns('html') }
+      const res = { sendfile: sinon.stub() }
+      expect(middleware(req, res, next)).to.be.undefined
+      expect(req.accepts).always.have.been.calledWithMatch('html')
+      expect(res.sendfile).always.have.been.calledWithMatch(...args)
+      expect(next).not.to.have.been.called
     })
   })
   it('ignores non-GET and non-HEAD requests', () => {
