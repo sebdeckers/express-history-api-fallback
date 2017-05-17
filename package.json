@@ -16,10 +16,7 @@
     "build": "mkdirp dist && babel lib --out-file dist/index.js",
     "codecov": "cat coverage/coverage.json | codecov"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cbas/express-history-api-fallback.git"
-  },
+  "repository": "gitlab:sebdeckers/express-history-api-fallback",
   "keywords": [
     "express",
     "html5",
@@ -34,12 +31,10 @@
     "router",
     "client side"
   ],
-  "author": "Sebastiaan Deckers <seb@ninja.sg>",
+  "author": "Sebastiaan Deckers <sebdeckers83@gmail.com>",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cbas/express-history-api-fallback/issues"
-  },
-  "homepage": "https://github.com/cbas/express-history-api-fallback#readme",
+  "bugs": "https://gitlab.com/sebdeckers/express-history-api-fallback/issues",
+  "homepage": "https://gitlab.com/sebdeckers/express-history-api-fallback#readme",
   "devDependencies": {
     "babel": "^5.8.29",
     "babel-eslint": "^4.1.3",
